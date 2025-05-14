@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewpoint" content="width=device-width, initial-scale=1">
+    <title>Book appointment</title>
+    <!-- Custom style sheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for social media icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <!-- First Navigation Bar -->
+        <nav class="navbar1 navbar-dark bg-dark">
+            <!-- Logo and Slogan top-left -->
+            <div class="logo">
+                <a href="#">
+                    <img src="images/logo.jpeg" title="tooth" alt="logo">
+                </a>
+                <span class="slogan">Smile Confidently, Live Brighter</span>
+            </div>
+
+            <!-- Navbar brand, social icons, and Book Appointment -->
+            <div class="navbar-content">
+                <a class="navbar-brand" href="#">Joyful Smiles Clinic</a>
+                <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="appointment.html">Book Appointment</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Second Navigation Bar -->
+        <nav class="navbar navbar-dark bg-dark">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="Index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="services.html">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="appointment.html">Book Appointment</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="tips.html">Dental Tips</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">Meet The Team</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Appointment Form -->
+    <form class="appointment-form" action="submit-appointment.php" method="post">
+        <h2>Book Your Appointment</h2>
+    
+        <label for="FullName">Full Name *</label>
+        <input type="text" id="FullName" name="FullName" required>
+    
+        <label for="phone">Phone number *</label>
+        <input type="tel" id="Phone" name="phone" required>
+    
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="Email" required>
+    
+        <label for="appointmentDateTime">Preferred Date and Time</label>
+        <input type="datetime-local" id="appointmentDateTime" name="appointmentDateTime" step="1800" required>
+    
+        <label for="service">Select Service</label>
+        <select id="service" name="service" required>
+            <option value="">--Please choose an option--</option>
+            <option value="general">General Check-up/Cleaning</option>
+            <option value="cosmetic">Cosmetic Dentistry</option>
+            <option value="orthodontics">Prosthodontics</option>
+        </select>
+    
+        <label for="notes">Additional Notes</label>
+        <textarea id="notes" name="notes" rows="4" placeholder="Any specific concerns/requests..."></textarea>
+    
+        <button type="submit">Submit Appointment Request</button>
+
+    </form>
+    <div id="success-message">
+        Appointment set, we will remind you the appointment a day before.Thank you &#128513;
+    </div>
+    <!--Footer section-->
+    <footer class="footer2">
+        <p>Clinic operating hours</p>
+        <p>- Monday-Friday: 08:00 AM - 05:00 PM</p>
+        <p>- Saturday: 08:00 AM - 12:00 PM</p>
+        <p>- Sunday: Closed</p>
+    </footer>
+     <script>
+        document.addEventListener("DOMContentLoaded",function(){
+        const form = document.getElementById("appointment-form");
+        const successMessage = document.getElementById("success-message");
+
+form.addEventListener("submit",function(e) {e.preventDefault();
+
+successMessage.style.display="block";
+form.reset();})})
+     </script>
+
+</body>
+</html>
