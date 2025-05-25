@@ -485,13 +485,15 @@ footer2 p {
 .subcategory {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     gap: 20px;
 }
 .service-card {
+    flex: 1 1 calc(48% - 20px); /* Responsive width */
     background: linear-gradient(135deg, #b0e0e6, #f0ffff); /* Gradient background */
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    width: calc(33.333% -20px);
+    max-width: 48%;
     box-sizing: border-box;
     padding: 20px;
     text-align: center;
@@ -527,49 +529,58 @@ footer2 p {
    About us html
    =========================== */
    .carousel-container {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-   }
+    overflow: hidden; /* Hide overflowing items */
+    position: relative; /* For positioning buttons */
+    width: 100%; /* Full width */
+    max-width: 1200px; /* Optional: Limit the maximum width */
+    margin: 0 auto; /* Center the carousel */
+}
 
-   .carousel-track {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    gap: 20px; /* Space between items */
-    width: max-content;
-   }
+.carousel-track {
+    display: flex; /* Align items horizontally */
+    transition: transform 0.5s ease-in-out; /* Smooth transition for sliding */
+}
 
    .carousel-item {
-    flex: 0 0 auto;
-    text-align: center;
-    width: 300px; /* Fixed width for each item */
-   }
-
+    flex: 0 0 auto; /* Prevent items from shrinking or growing */
+    width: 250px; /* Set a fixed width for each card */
+    height: 350px; /* Set a fixed height for each card */
+    margin: 10px; /* Add spacing between cards */
+    box-sizing: border-box;
+}
    .team-card {
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    padding: 20px;
-   }
+    width: 100%; /* Full width of the carousel item */
+    height: 100%; /* Full height of the carousel item */
+    display: flex; /* Use Flexbox for layout */
+    flex-direction: column; /* Stack content vertically */
+    align-items: center; /* Center-align content horizontally */
+    justify-content: space-between; /* Space out content vertically */
+    padding: 10px; /* Add padding inside the card */
+    background: #f9f9f9; /* Light background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center; /* Center-align text */
+}
+
 
    .team-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 50%;
-    max-width: 150px;
-    margin-bottom: 15px;
-   }
+    width: 100%; /* Full width of the card */
+    height: 60%; /* Take up 60% of the card height */
+    object-fit: cover; /* Ensure the image scales properly */
+    border-radius: 8px; /* Rounded corners for the image */
+}
 
    .team-card h3 {
-    margin: 10px 0;
-    color:#7f8c8d;
-   }
+    margin: 10px 0 5px; /* Add spacing above and below the heading */
+    font-size: 18px; /* Set font size */
+    color: #333; /* Dark text color */
+}
 
    .team-card p {
-    margin: 5px 0;
-    color: #7f8c8d;
-   }
+    margin: 0; /* Remove default margins */
+    font-size: 14px; /* Set font size */
+    color: #666; /* Light text color */
+}
 
    .carousel-buttons {
     position: absolute;
@@ -646,9 +657,18 @@ footer2 p {
     margin-top: 20px;
     text-align: center;
    }
-   .video_wrapper {
-    width: 100%;
-    max-width: 720px;
-    height: auto;
-    border-radius: 8px;
-   }
+   .video_wrapper video {
+    width: 100%; /* Make the video responsive to the wrapper's width */
+    max-width: 480px; /* Set the maximum width of the video */
+    max-height: 270px; /* Set the maximum height of the video */
+    object-fit: contain; /* Ensure the video scales properly without being cropped */
+    border-radius: 8px; /* Optional: Add rounded corners to the video */
+}
+   .tips_section img {
+    max-width: 100%; /* Ensure the image doesn't exceed the container width */
+    max-height: 200px; /* Set a maximum height for the image */
+    width: auto; /* Maintain aspect ratio */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Center the image if needed */
+    margin: 10px auto; /* Add spacing and center the image */
+}
