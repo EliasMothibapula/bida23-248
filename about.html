@@ -106,8 +106,8 @@
             <!--Member 5-->
             <div class="carousel-item">
                 <div class="team-card">
-                    <img src="images/cosmetic.jpeg" alt="Dr.Bontle Mothibapula">
-                    <h3>Dr.Bontle Mothibapula</h3>
+                    <img src="images/index-banner-2.jpg" alt="Zakes Tsie">
+                    <h3>Zakes Tsie</h3>
                     <p>Dental assistant</p>
                     <p>Boitekanelo college</p>
                 </div>
@@ -116,8 +116,8 @@
             <!--Memeber 6-->
             <div class="carousel-item">
                 <div class="team-card">
-                    <img src="images/braces.jpeg" alt="Dr.Bontle Mothibapula">
-                    <h3>Dr.Bontle Mothibapula</h3>
+                    <img src="images/istockphoto-1296444589-612x612.jpg" alt="Bontle Ditsela">
+                    <h3>Bontle Ditsela</h3>
                     <p>Dental assistant</p>
                     <p>Boitekanelo college</p>
                 </div>
@@ -126,8 +126,8 @@
             <!--Member 7-->
             <div class="carousel-item">
                 <div class="team-card">
-                    <img src="images/braces.jpeg" alt="Dr.Bontle Mothibapula">
-                    <h3>Dr.Bontle Mothibapula</h3>
+                    <img src="images/istockphoto-175230028-612x612.jpg" alt="Pako Pako">
+                    <h3>Pako Pako</h3>
                     <p>Dental assistant</p>
                     <p>Boitekanelo college</p>
                 </div>
@@ -136,8 +136,8 @@
             <!--Member 8-->
             <div class="carousel-item">
                 <div class="team-card">
-                    <img src="" alt="Dr.Bontle Mothibapula">
-                    <h3>Dr.Bontle Mothibapula</h3>
+                    <img src="images/Dental-assisting-photo.jpg" alt="Emma Watson">
+                    <h3>Emma Watson</h3>
                     <p>Dental assistant</p>
                     <p>Boitekanelo college</p>
                 </div>
@@ -170,29 +170,37 @@ let index = 0;
 function updateCarousel() {
     const itemWidth = items[0].getBoundingClientRect().width;
     const itemsPerView = Math.floor(carouselContainer.offsetWidth / itemWidth);
-    const maxIndex = items.length - itemsPerView;
+    const maxIndex = Math.max(0, items.length - itemsPerView); // Ensure maxIndex is non-negative
+
+    // Set the track width dynamically to fit all items
+    track.style.width = `${itemWidth * items.length}px`;
+
+    // Prevent index from exceeding the maximum
     if (index > maxIndex) {
-        index = maxIndex; // Prevent index from exceeding the maximum
+        index = maxIndex;
     }
-    track.style.transform = 'translateX(' + (-itemWidth * index) + 'px)';
+
+    // Apply the transform to show the correct items
+    track.style.transform = `translateX(${-itemWidth * index}px)`;
 }
 
 function nextSlide() {
-    const itemWidth = items[0].getBoundingClientRect().width;
+    const itemWidth = items[0].getBoundingClientRect().width +20;
     const itemsPerView = Math.floor(carouselContainer.offsetWidth / itemWidth);
-    const maxIndex = items.length - itemsPerView;
-    index = (index + 1) > maxIndex ? 0 : index + 1; // Loop back to the start
+    const maxIndex = Math.max(0, items.length - itemsPerView);
+
+    // Increment index and prevent overflow
+    index = Math.min(index + 1, maxIndex);
     updateCarousel();
 }
 
 function prevSlide() {
-    const itemWidth = items[0].getBoundingClientRect().width;
-    const itemsPerView = Math.floor(carouselContainer.offsetWidth / itemWidth);
-    const maxIndex = items.length - itemsPerView;
-    index = (index - 1) < 0 ? maxIndex : index - 1; // Loop back to the end
+    // Decrement index and prevent underflow
+    index = Math.max(index - 1, 0);
     updateCarousel();
 }
 
+// Event listeners for navigation buttons
 prevBtn.addEventListener('click', prevSlide);
 nextBtn.addEventListener('click', nextSlide);
 
@@ -207,16 +215,16 @@ function stopAutoplay() {
     clearInterval(autoplayInterval);
 }
 
+// Start and stop autoplay on hover
 carouselContainer.addEventListener('mouseenter', stopAutoplay);
 carouselContainer.addEventListener('mouseleave', startAutoplay);
-
-startAutoplay(); // Start autoplay initially
 
 // Responsive adjustment
 window.addEventListener('resize', updateCarousel);
 
 // Initial setup
 updateCarousel();
+startAutoplay();
     </script>
 </body>
 </html>
