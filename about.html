@@ -159,72 +159,74 @@
                 </div>
             </div>
     </footer>
-    <script>
-        const track = document.querySelector('.carousel-track');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const items = document.querySelectorAll('.carousel-item');
-const carouselContainer = document.querySelector('.carousel-container');
-let index = 0;
+<script>
+    const track = document.querySelector('.carousel-track');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const items = document.querySelectorAll('.carousel-item');
+    const carouselContainer = document.querySelector('.carousel-container');
+    let index = 0;
+    let autoplayInterval;
 
-function updateCarousel() {
-    const itemWidth = items[0].getBoundingClientRect().width;
-    const itemsPerView = Math.floor(carouselContainer.offsetWidth / itemWidth);
-    const maxIndex = Math.max(0, items.length - itemsPerView); // Ensure maxIndex is non-negative
-
-    // Set the track width dynamically to fit all items
-    track.style.width = `${itemWidth * items.length}px`;
-
-    // Prevent index from exceeding the maximum
-    if (index > maxIndex) {
-        index = maxIndex;
+    // Function to get item width including margins
+    function getItemWidth(item) {
+        const style = getComputedStyle(item);
+        const marginLeft = parseFloat(style.marginLeft);
+        const marginRight = parseFloat(style.marginRight);
+        return item.getBoundingClientRect().width + marginLeft + marginRight;
     }
 
-    // Apply the transform to show the correct items
-    track.style.transform = `translateX(${-itemWidth * index}px)`;
-}
+    // Update the carousel position and size
+    function updateCarousel() {
+        const itemWidth = getItemWidth(items[0]);
+        const itemsPerView = Math.floor(carouselContainer.offsetWidth / itemWidth);
+        const maxIndex = Math.max(0, items.length - itemsPerView);
 
-function nextSlide() {
-    const itemWidth = items[0].getBoundingClientRect().width +20;
-    const itemsPerView = Math.floor(carouselContainer.offsetWidth / itemWidth);
-    const maxIndex = Math.max(0, items.length - itemsPerView);
+        track.style.width = `${itemWidth * items.length}px`;
 
-    // Increment index and prevent overflow
-    index = Math.min(index + 1, maxIndex);
+        if (index > maxIndex) {
+            index = maxIndex;
+        }
+
+        track.style.transform = `translateX(${-itemWidth * index}px)`;
+    }
+
+    // Navigate to next slide
+    function nextSlide() {
+        const itemWidth = getItemWidth(items[0]);
+        const itemsPerView = Math.floor(carouselContainer.offsetWidth / itemWidth);
+        const maxIndex = Math.max(0, items.length - itemsPerView);
+
+        index = Math.min(index + 1, maxIndex);
+        updateCarousel();
+    }
+
+    // Navigate to previous slide
+    function prevSlide() {
+        index = Math.max(index - 1, 0);
+        updateCarousel();
+    }
+
+    // Start autoplay
+    function startAutoplay() {
+        autoplayInterval = setInterval(nextSlide, 3000);
+    }
+
+    // Stop autoplay
+    function stopAutoplay() {
+        clearInterval(autoplayInterval);
+    }
+
+    // Event listeners
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+    carouselContainer.addEventListener('mouseenter', stopAutoplay);
+    carouselContainer.addEventListener('mouseleave', startAutoplay);
+    window.addEventListener('resize', updateCarousel);
+
+    // Initial setup
     updateCarousel();
-}
-
-function prevSlide() {
-    // Decrement index and prevent underflow
-    index = Math.max(index - 1, 0);
-    updateCarousel();
-}
-
-// Event listeners for navigation buttons
-prevBtn.addEventListener('click', prevSlide);
-nextBtn.addEventListener('click', nextSlide);
-
-// Autoplay
-let autoplayInterval;
-
-function startAutoplay() {
-    autoplayInterval = setInterval(nextSlide, 3000);
-}
-
-function stopAutoplay() {
-    clearInterval(autoplayInterval);
-}
-
-// Start and stop autoplay on hover
-carouselContainer.addEventListener('mouseenter', stopAutoplay);
-carouselContainer.addEventListener('mouseleave', startAutoplay);
-
-// Responsive adjustment
-window.addEventListener('resize', updateCarousel);
-
-// Initial setup
-updateCarousel();
-startAutoplay();
-    </script>
+    startAutoplay();
+</script>
 </body>
 </html>
