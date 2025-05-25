@@ -73,9 +73,36 @@
         <label for="email">Email Address *</label>
         <input type="email" id="email" name="Email" required>
     
-        <label for="appointmentDateTime">Preferred Date and Time</label>
-        <input type="datetime-local" id="appointmentDateTime" name="appointmentDateTime" step="1800" required>
-    
+        <label for="appointmentDate">Preferred Date</label>
+        <input 
+            type="date" 
+            id="appointmentDate" 
+            name="appointmentDate" 
+            required>
+        
+        <label for="appointmentTime">Preferred Time</label>
+        <select id="appointmentTime" name="appointmentTime" required>
+            <option value="">--Select a time--</option>
+            <option value="08:00">08:00 AM</option>
+            <option value="08:30">08:30 AM</option>
+            <option value="09:00">09:00 AM</option>
+            <option value="09:30">09:30 AM</option>
+            <option value="10:00">10:00 AM</option>
+            <option value="10:30">10:30 AM</option>
+            <option value="11:00">11:00 AM</option>
+            <option value="11:30">11:30 AM</option>
+            <option value="12:00">12:00 PM</option>
+            <option value="12:30">12:30 PM</option>
+            <option value="01:00">01:00 PM</option>
+            <option value="01:30">01:30 PM</option>
+            <option value="02:00">02:00 PM</option>
+            <option value="02:30">02:30 PM</option>
+            <option value="03:00">03:00 PM</option>
+            <option value="03:30">03:30 PM</option>
+            <option value="04:00">04:00 PM</option>
+            <option value="04:30">04:30 PM</option>
+        </select>
+
         <label for="service">Select Service</label>
         <select id="service" name="service" required>
             <option value="">--Please choose an option--</option>
@@ -90,9 +117,7 @@
         <button type="submit">Submit Appointment Request</button>
 
     </form>
-    <div id="success-message">
-        Appointment set, we will remind you the appointment a day before.Thank you &#128513;
-    </div>
+
     <!--Footer section-->
     <footer class="footer2">
         <p>Clinic operating hours</p>
@@ -100,16 +125,66 @@
         <p>- Saturday: 08:00 AM - 12:00 PM</p>
         <p>- Sunday: Closed</p>
     </footer>
-     <script>
-        document.addEventListener("DOMContentLoaded",function(){
-        const form = document.getElementById("appointment-form");
-        const successMessage = document.getElementById("success-message");
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Restrict available booking dates to the next 30 days
+        const appointmentDate = document.getElementById("appointmentDate");
+        const today = new Date();
+        const maxDate = new Date();
+        maxDate.setDate(today.getDate() + 30);
 
-form.addEventListener("submit",function(e) {e.preventDefault();
+        // Set the min and max attributes for the date input
+        appointmentDate.min = today.toISOString().split("T")[0];
+        appointmentDate.max = maxDate.toISOString().split("T")[0];
 
-successMessage.style.display="block";
-form.reset();})})
-     </script>
+        // Handle form submission
+        const form = document.querySelector(".appointment-form");
+        form.addEventListener("submit", function (e) {
+            e.preventDefault(); // Prevent the form from submitting normally
 
+            // Display the pop-up message
+            alert("Thank you! Our reception will contact you shortly.");
+
+            // Reset the form fields
+            form.reset();
+        });
+
+        // Handle time validation based on the selected date
+        appointmentDate.addEventListener("change", function () {
+            const selectedDate = new Date(appointmentDate.value);
+            const day = selectedDate.getDay(); // 0 = Sunday, 6 = Saturday
+            const appointmentTime = document.getElementById("appointmentTime");
+
+            // Clear previous options
+            appointmentTime.innerHTML = '<option value="">--Select a time--</option>';
+
+            if (day === 0) { // Sunday
+                alert("The clinic is closed on Sundays. Please select another day.");
+                appointmentDate.value = ""; // Clear the input
+            } else if (day === 6) { // Saturday
+                // Add available times for Saturday (8:00 AM - 12:00 PM)
+                const saturdayTimes = ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00"];
+                saturdayTimes.forEach(time => {
+                    const option = document.createElement("option");
+                    option.value = time;
+                    option.textContent = time;
+                    appointmentTime.appendChild(option);
+                });
+            } else { // Monday to Friday
+                // Add available times for weekdays (8:00 AM - 5:00 PM)
+                const weekdayTimes = [
+                    "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00",
+                    "12:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30"
+                ];
+                weekdayTimes.forEach(time => {
+                    const option = document.createElement("option");
+                    option.value = time;
+                    option.textContent = time;
+                    appointmentTime.appendChild(option);
+                });
+            }
+        });
+    });
+</script>
 </body>
 </html>
